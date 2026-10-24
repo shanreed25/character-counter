@@ -1,14 +1,12 @@
-
+import './TextInput.css'
 
 
 function TextInput() {
 
 
     return (
-        <div>
-            <textarea>
-
-            </textarea>
+        <div className="text-input">
+            <textarea placeholder="Start typing your content here"></textarea>
         </div>
     )
 }
