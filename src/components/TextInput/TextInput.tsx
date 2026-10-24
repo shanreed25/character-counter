@@ -6,7 +6,9 @@ function TextInput() {
 
     return (
         <div>
-            <h2>Text Input Component</h2>
+            <textarea>
+
+            </textarea>
         </div>
     )
 }
