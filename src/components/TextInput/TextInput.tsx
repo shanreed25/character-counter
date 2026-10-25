@@ -16,8 +16,8 @@ function TextInput({
     }
 
     return (
-        <div className="text-input">
-            <textarea 
+        <div className="">
+            <textarea className='w-full  focus:ring-purple-500 focus:ring-2 focus:outline-none' 
             placeholder={placeholder}
             defaultValue={initialValue}
             onChange={handleChange}
@@ -29,7 +29,7 @@ function TextInput({
             //onChange={handleChange} is its own function so TS does not know what e is
                 //so you have to tell the handleChange function what type e is
             rows={6}
-            />
+            ></textarea>
         </div>
     )
 }

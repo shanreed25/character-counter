@@ -1,14 +1,11 @@
-import StatsDisplay from './components/StatsDisplay/StatsDisplay'
-import './App.css'
 import CharacterCounter from './components/CharacterCounter/CharacterCounter'
 
 function App() {
 
-
   return (
-    <>
+    <main className='mx-auto max-w-2xl mt-50'>
       <CharacterCounter />
-    </>
+    </main>
   )
 }
 
