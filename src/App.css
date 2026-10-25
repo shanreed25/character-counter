@@ -1,11 +1,12 @@
 body{
-
+    padding-top:100px;
 }
 
 #root {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 25px;
     max-width: 500px;
-    margin: 0, auto;
+    margin: 0 auto;
 }

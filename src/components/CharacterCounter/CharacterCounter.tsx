@@ -5,7 +5,7 @@ function CharacterCounter() {
 
 
     return (
-        <div className="character-counter">
+        <div className="stat character-counter">
             <p>Characters</p>
             <p>0</p>
         </div>

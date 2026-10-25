@@ -1,12 +1,25 @@
-import './TextInput.css'
+import type { TextInputProps } from '../../types';
+// import './TextInput.css'
 
 
-function TextInput() {
+function TextInput({
+    onTextChange, 
+    placeholder = "Start typing your content here", 
+    initialValue = ""
+}: TextInputProps) {
+    function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>){
+        onTextChange(e.target.value)
 
+    }
 
     return (
         <div className="text-input">
-            <textarea placeholder="Start typing your content here"></textarea>
+            <textarea 
+            placeholder={placeholder}
+            defaultValue={initialValue}
+            onChange={handleChange}
+            rows={6}
+            ></textarea>
         </div>
     )
 }
