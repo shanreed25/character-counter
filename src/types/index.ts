@@ -15,6 +15,11 @@ export interface TextStats {
 export interface StatsDisplayProps {
   stats: TextStats;
   showReadingTime?: boolean;
+  //word count should be in StatsDisplay, but minWords and maxWords are
+  // in CharacterCounteradding minWords and maxWords here will let me
+  // pass them down from CharacterCounter to StatsDisplay
+  minWords?: number; 
+  maxWords?: number;
 }
 
 
