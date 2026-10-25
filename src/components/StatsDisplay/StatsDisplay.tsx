@@ -5,23 +5,23 @@ function StatsDisplay({stats, showReadingTime = true}: StatsDisplayProps) {
 
 
     return (
-        <div className="stats-display">
-           <div className="">
-                <p>Characters</p>
-                <p>{stats.characterCount}</p>
+        <div className="flex justify-around rounded-lg bg-white p-6">
+           <div className="text-center">
+                <p className="text-purple-500">Characters</p>
+                <p className="text-2xl font-semibold">{stats.characterCount}</p>
             </div>
 
-            <div className="stat words">
-                <p>Words</p>
-                <p>{stats.wordCount}</p>
-                <p>Min: 25 | Max: 100</p>
+            <div className="text-center">
+                <p className="text-purple-500">Words</p>
+                <p className="text-2xl font-semibold">{stats.wordCount}</p>
+                <p className="text-red-500 font-medium">Min: 25 | Max: 100</p>
             </div>
 
             {
             showReadingTime && 
-            <div className="stat reading-time">
-                <p>Reading Time</p>
-                <p>{stats.readingTime}</p>
+            <div className="text-center">
+                <p className="text-purple-500">Reading Time</p>
+                <p className="text-2xl font-semibold">{stats.readingTime}</p>
             </div>
             }
         </div>
