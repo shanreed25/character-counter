@@ -20,20 +20,20 @@ function StatsDisplay({stats, showReadingTime = true, minWords, maxWords}: Stats
     return (
         <div className="flex justify-around rounded-lg bg-white p-6">
            <div className="text-center">
-                <p className="text-purple-500">Characters</p>
+                <p className="text-gray-500">Characters</p>
                 <p className="text-2xl font-semibold">{stats.characterCount}</p>
             </div>
 
             <div className="text-center">
-                <p className="text-purple-500">Words</p>
+                <p className="text-gray-500">Words</p>
                 <p className={`${getColor()} text-2xl font-semibold`}>{stats.wordCount}</p>
-                <p className="text-red-500 font-medium">Min: 25 | Max: 100</p>
+                <p className="text-xs text-purple-500 font-light mt-3">Min: 25 | Max: 100</p>
             </div>
 
             {
             showReadingTime && 
             <div className="text-center">
-                <p className="text-purple-500">Reading Time</p>
+                <p className="text-gray-500">Reading Time</p>
                 <p className="text-2xl font-semibold">{stats.readingTime}</p>
             </div>
             }

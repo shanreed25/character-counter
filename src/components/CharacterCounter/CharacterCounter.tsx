@@ -1,5 +1,5 @@
 import TextInput from "../TextInput/TextInput";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { CharacterCounterProps, TextStats } from "../../types";
 import StatsDisplay from "../StatsDisplay/StatsDisplay";
 
@@ -8,14 +8,17 @@ function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps
 
     //takes a plain string, not an event because TextInput uses e.target.value out of the event
     // Character Counter is the parent and never has to deal the event type at all
-    function handleTextChange(text: string){
+    // function handleTextChange(text: string){//creates a brand new function each time the component re-renders
+    //     setUserText(text)
+    // }
+
+    const handleTextChange = useCallback((text: string) => {//useCallback makes it use the same function unless something in the dependency array changes
         setUserText(text)
-    }
+    }, [])
 
 
     //need an object that matches the TextStats interface
     //since this component has the data create it here and pass to StatsDisplay
-
 
     const characterCount = userText.length;
     const trimmedUserText = userText.trim();
