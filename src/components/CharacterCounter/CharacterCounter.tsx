@@ -1,6 +1,7 @@
 import TextInput from "../TextInput/TextInput";
 import { useState } from "react";
-import type { CharacterCounterProps } from "../../types";
+import type { CharacterCounterProps, TextStats } from "../../types";
+import StatsDisplay from "../StatsDisplay/StatsDisplay";
 
 function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps) {
     const [userText, setUserText] = useState<string>("");
@@ -11,16 +12,30 @@ function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps
         setUserText(text)
     }
 
+
+    //need an object that matches the TextStats interface
+    //since this component has the data create it here and pass to StatsDisplay
+
+
+    const characterCount = userText.length;
     const trimmedUserText = userText.trim();
     const splitWordCount = trimmedUserText.split(/\s+/).length;
     const wordCount = trimmedUserText === '' ? 0 : splitWordCount
+
+    
+    //since my variables have the same name as the expected type
+    //properties I can write the name once instead of {characterCount: characterCount, wordCount: wordCount,}
+    const stats: TextStats = {
+        characterCount,
+        wordCount,
+        readingTime: wordCount / 200
+    }
 
 
     return (
         <div className="stat character-counter">
             <TextInput onTextChange={handleTextChange} />
-            <p>{userText.length}</p>
-            <p>{wordCount}</p>
+            <StatsDisplay stats={stats} />
         </div>
     )
 }
