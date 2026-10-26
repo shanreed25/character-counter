@@ -22,7 +22,7 @@ function TextInput({
   //<HTMLTextAreaElement>: comes from a textarea
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setInputLength(e.target.value.length);
-    onTextChange(e.target.value);
+    onTextChange(e.target.value);//callback used to send text
   }
 
 

@@ -40,6 +40,7 @@ function CharacterCounter({minWords = 25, maxWords = 100, targetReadingTime = 0.
 
     return (
         <div className="flex flex-col gap-30 rounded-xl border border-gray-300 shadow-lg p-10">
+            {/* onTextChange() gets the text from onChange handler */}
             <TextInput onTextChange={handleTextChange} maxLength={4000}/>
             <StatsDisplay 
             stats={stats} 

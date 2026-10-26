@@ -82,19 +82,16 @@ npm run dev
 - Reading times of a minute or more are formatted as minutes and seconds (for example "2 min 30 sec") instead of a long decimal.
 
 ## User Interface
-
 - [X] Create a responsive layout.
 - [X] Show visual feedback for statistics.
 - [X] Implement progress indicators for word count goals.
 
 ### Responsive layout
-
 - The app is centered with a maximum width (`mx-auto max-w-2xl`), so it doesn't stretch too wide on large screens.
 - The textarea is full width (`w-full`) and fits any screen size.
 - The statistics use a grid that is one column on phones (`grid-cols-1`) and three columns side by side on larger screens (`sm:grid-cols-3`).
 
 ### Visual feedback for statistics
-
 - **Word count:** changes color based on the word goal (see Progress indicator below).
 - **Over the word max:** a red message shows how many words over the limit the text is.
 - **Reading time:** gray until it reaches `targetReadingTime`, then green. The target is shown under it (for example "Target: 15 sec").
@@ -113,3 +110,48 @@ The word count number shows progress toward the goal with color:
 | Above `maxWords` (100) | Red, plus an "over the limit" message | Too long |
 
 The Min and Max values are shown under the word count, so the writer always knows the target range.
+
+## Component Communication
+- [X] Use callbacks to pass data between components.
+- [X] Ensure proper prop typing.
+- [X] Handle optional props appropriately.
+
+> CharacterCounter owns the data and passes it where it's needed. TextInput and StatsDisplay never talk to each other directly. `TextInput  --onTextChange(text)-->  CharacterCounter  --stats, goals-->  StatsDisplay`
+
+1. The user types in TextInput.
+2. TextInput calls the `onTextChange` callback with the new text.
+3. CharacterCounter saves the text to state and calculates the statistics.
+4. CharacterCounter passes the `stats` object and the goals (`minWords`, `maxWords`, `targetReadingTime`) to StatsDisplay as props.
+
+
+### Callbacks
+- CharacterCounter creates `handleTextChange` and passes it to TextInput as `onTextChange`.
+- The callback takes a plain `string`, not an event. TextInput reads `e.target.value` from the event itself, so the parent never has to deal with event types.
+- `handleTextChange` is wrapped in `useCallback` with an empty dependency array, so TextInput receives the same function on every render.
+
+### Prop typing
+> All props are defined as TypeScript interfaces in `src/types/index.ts` and imported with `import type`:
+
+| Interface | Used by | Props |
+|---|---|---|
+| `TextInputProps` | TextInput | `onTextChange` (required), `placeholder`, `initialValue`, `maxLength` |
+| `StatsDisplayProps` | StatsDisplay | `stats` (required), `showReadingTime`, `minWords`, `maxWords`, `targetReadingTime` |
+| `CharacterCounterProps` | CharacterCounter | `minWords`, `maxWords`, `targetReadingTime` |
+| `TextStats` | the `stats` object | `characterCount`, `wordCount`, `readingTime` (in minutes) |
+
+**The callback is typed as `(text: string) => void`, and the change handler is typed as `React.ChangeEvent<HTMLTextAreaElement>`.**
+
+> `maxLength`, `minWords`, `maxWords`, and `targetReadingTime` were added to the interfaces so the limits and goals could be passed down from CharacterCounter.
+
+### Optional props
+
+> Optional props are handled in two ways
+
+**Default values**, for props that always need a value:
+- TextInput: `placeholder = "Start typing your content here"`, `initialValue = ""`
+- StatsDisplay: `showReadingTime = true`
+- CharacterCounter: `minWords = 25`, `maxWords = 100`, `targetReadingTime = 0.25`
+
+**`undefined` checks**, for props where "not set" means "turn the feature off":
+- TextInput: no `maxLength` means no character limit and no warning.
+- StatsDisplay: with no `minWords`/`maxWords`, the word count has no color and the Min/Max label is hidden. With no `targetReadingTime`, the reading time has no color and the Target label is hidden.
