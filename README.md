@@ -54,3 +54,29 @@ npm run dev
 - **Word count goal:** the word count is red below `minWords`, green within the range, and red again above `maxWords`, where a message shows how many words over the limit the text is.
 - **Reading time:** formatted as minutes and seconds (for example "1 min 15 sec") and turns green once it reaches `targetReadingTime`.
 - `showReadingTime` (default `true`) hides the reading time when set to `false`.
+
+## State Management
+- [X] Track the current text input.
+- [X] Calculate and update statistics when text changes.
+- [X] Handle edge cases (empty input, very long text).
+
+### Tracking the text input
+> CharacterCounter stores the text in `useState<string>("")`. TextInput sends every change up through the `onTextChange` callback, and `handleTextChange` saves it to state. CharacterCounter is the only place the full text is stored, so the statistics always come from the same source.
+
+### Updating statistics when the text changes
+> The statistics are not stored in separate state. They are calculated from the text on every render:
+
+- **Characters:** `userText.length`
+- **Words:** the text is trimmed and split on whitespace (`/\s+/`), so extra spaces, tabs, and line breaks between words are not counted as words
+- **Reading time:** word count divided by 210 words per minute
+
+> Calculating them from the text means they can never get out of sync with it. Each keystroke updates the state, which re-renders the component and recalculates all three values.
+
+### Edge cases
+
+**Empty input:** an empty string split on whitespace still returns one item, so the word count would show 1. The code checks for empty trimmed text and returns 0 instead, which also covers input that is only spaces or line breaks. The reading time then shows "0 sec".
+
+**Very long text:**
+- The textarea has a 4,000-character limit (`maxLength`). The browser stops typing at the limit and cuts off pasted text that is too long. When the limit is reached, the outline turns red and a warning appears under the textarea.
+- When the word count goes over `maxWords`, a message shows how many words over the limit the text is. The writer can keep typing, but can see they are over.
+- Reading times of a minute or more are formatted as minutes and seconds (for example "2 min 30 sec") instead of a long decimal.
