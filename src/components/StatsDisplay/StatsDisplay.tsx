@@ -6,6 +6,8 @@ function StatsDisplay({
   minWords,
   maxWords,
 }: StatsDisplayProps) {
+
+
   function getColor(): string {
     if (minWords === undefined || maxWords === undefined) {
       return "";
@@ -47,13 +49,23 @@ function StatsDisplay({
     const finalMinutes = Math.floor(minutesAsDecimal);
 
     //if reading time is less than a minute, only return seconds
+    // if (finalMinutes === 0) {
+    //   return `0:${finalSeconds}`;
+    // }
+
     if (finalMinutes === 0) {
       return `${finalSeconds} sec`;
     }
 
+    // return finalSeconds === 0
+    //   ? `${finalMinutes}:00`//if there are no seconds, just return minutes
+    //   : `${finalMinutes}:${finalSeconds}`
+
     return finalSeconds === 0
       ? `${finalMinutes} min`//if there are no seconds, just return minutes
       : `${finalMinutes} min ${finalSeconds} sec`;
+
+    
   }
 
   return (
@@ -72,6 +84,13 @@ function StatsDisplay({
         {minWords !== undefined && maxWords !== undefined && (
           <p className="text-xs text-purple-500 font-light mt-3">
             Min: {minWords} | Max: {maxWords}
+          </p>
+        )}
+
+        {/* when over the word max show an alert */}
+        {maxWords !== undefined && stats.wordCount > maxWords && (
+          <p className="text-xs text-red-500 font-bold mt-1" role="alert">
+            {stats.wordCount - maxWords} words over the limit
           </p>
         )}
       </div>
