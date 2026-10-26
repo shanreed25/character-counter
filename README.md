@@ -80,3 +80,36 @@ npm run dev
 - The textarea has a 4,000-character limit (`maxLength`). The browser stops typing at the limit and cuts off pasted text that is too long. When the limit is reached, the outline turns red and a warning appears under the textarea.
 - When the word count goes over `maxWords`, a message shows how many words over the limit the text is. The writer can keep typing, but can see they are over.
 - Reading times of a minute or more are formatted as minutes and seconds (for example "2 min 30 sec") instead of a long decimal.
+
+## User Interface
+
+- [X] Create a responsive layout.
+- [X] Show visual feedback for statistics.
+- [X] Implement progress indicators for word count goals.
+
+### Responsive layout
+
+- The app is centered with a maximum width (`mx-auto max-w-2xl`), so it doesn't stretch too wide on large screens.
+- The textarea is full width (`w-full`) and fits any screen size.
+- The statistics use a grid that is one column on phones (`grid-cols-1`) and three columns side by side on larger screens (`sm:grid-cols-3`).
+
+### Visual feedback for statistics
+
+- **Word count:** changes color based on the word goal (see Progress indicator below).
+- **Over the word max:** a red message shows how many words over the limit the text is.
+- **Reading time:** gray until it reaches `targetReadingTime`, then green. The target is shown under it (for example "Target: 15 sec").
+- **Character limit:** when the text reaches 4,000 characters, the textarea outline turns red and a warning appears under it.
+- **Transitions:** color changes fade in (`transition-colors`, `transition-shadow`) instead of switching instantly.
+- **Accessibility:** the textarea has a screen-reader label, and the warnings use `role="alert"` so screen readers announce them. The textarea also sets `aria-invalid` and `aria-describedby` when the character limit is reached.
+
+### Progress indicator for the word count goal
+
+The word count number shows progress toward the goal with color:
+
+| Word count | Color | Meaning |
+|---|---|---|
+| Below `minWords` (25) | Red | Not long enough yet |
+| `minWords` to `maxWords` (25 to 100) | Green | Within the goal |
+| Above `maxWords` (100) | Red, plus an "over the limit" message | Too long |
+
+The Min and Max values are shown under the word count, so the writer always knows the target range.
