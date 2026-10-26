@@ -155,3 +155,22 @@ The Min and Max values are shown under the word count, so the writer always know
 **`undefined` checks**, for props where "not set" means "turn the feature off":
 - TextInput: no `maxLength` means no character limit and no warning.
 - StatsDisplay: with no `minWords`/`maxWords`, the word count has no color and the Min/Max label is hidden. With no `targetReadingTime`, the reading time has no color and the Target label is hidden.
+
+
+## Reflection Questions
+
+#### How did you handle state updates when the text changed?
+- The text is stored in useState in CharacterCounter
+- TextInput onChange handler sends the text up through the onTextChange callback to CharacterCounter's `handleTextChange`
+- `handleTextChange` updates the state and saves the text with `setUserText` 
+- When the text state is updated the CharacterCounter component re-renders
+- The re-render recalculates the statistics and them passed down to StatsDisplay to display them in the UI
+
+#### What considerations did you make when calculating reading time?
+> Researched to see what number reading speed I should use. Many examples used 230 to 260 wpm (a common estimate for average adult reading speed), so I used 210 because it seemed like a safe number after testing different numbers. Reading is calculated from word count, which gave a decimal result, and I use a formatTime helper function to get it to show as minutes and seconds. I add a target reading time because it was part of the interface props. If the just spaces are entered it shows 0 sec, I used a different display format from the example because I just think it reads better, but both are in the code one is just commented out.
+
+#### How did you ensure the UI remained responsive during rapid text input?
+> I made the textarea an uncontrolled by using defaultValue, but the difference does not really show because this app re-renders quickly, the goal was to allow the browser to show the text right away without waiting for React. The statistics are not stored in separate state, they are done from the text on each render. I used a 4,000-character limit to keep the text from being too large which can slow things down.
+
+#### What challenges did you face when implementing the statistics calculations?
+> Formatting the reading time was the most challenging because I had to convert minutes in decimal to seconds and split them into minutes and leftover seconds then choose a target reading time that could be reached within the word limit. The first attempt used the wrong variables, which only showed up when I tested text longer than a minute. Implementing the word count was also challenging because an empty text box counted as 1 word, so I trimmed the text and returned 0 when it was empty, then split on any whitespace so extra spaces didn't count as words.
