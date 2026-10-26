@@ -36,7 +36,7 @@ function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps
 
 
     return (
-        <div className="flex flex-col gap-30">
+        <div className="flex flex-col gap-30 rounded-xl border border-gray-300 shadow-lg p-10">
             <TextInput onTextChange={handleTextChange} />
             <StatsDisplay stats={stats} minWords={minWords} maxWords={maxWords}/>
         </div>
