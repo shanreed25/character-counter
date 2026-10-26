@@ -5,10 +5,24 @@ function StatsDisplay({
   showReadingTime = true,
   minWords,
   maxWords,
+  targetReadingTime,
 }: StatsDisplayProps) {
 
+  function getReadingTimeColor(): string {
+    if (targetReadingTime === undefined){
+      return "";
+    }
 
-  function getColor(): string {
+    switch (true){
+      case stats.readingTime >= targetReadingTime:
+      return "text-green-600";
+      default:
+        return "text-gray-500";
+
+    }
+  }
+
+  function getWordCountColor(): string {
     if (minWords === undefined || maxWords === undefined) {
       return "";
     }
@@ -21,14 +35,14 @@ function StatsDisplay({
     }
   }
 
-  function formatTime(): string {
+  function formatTime(num: number): string {//formats any number
     //minutes look like a decimal, something like 0.455
     //need it to be readable like 3 min 15 sec, 3 min 15 sec
 
     //GET SECONDS
     //convert minutes to seconds
     //0.455 minutes * 60 = 27.30 seconds
-    const secondsAsDecimal = stats.readingTime * 60;
+    const secondsAsDecimal = num * 60;
 
     //seconds can still have decimals
     //remove decimal by rounding to the nearest whole second
@@ -77,7 +91,7 @@ function StatsDisplay({
 
       <div className="">
         <p className="text-gray-500">Words</p>
-        <p className={`${getColor()} text-2xl font-semibold`}>
+        <p className={`${getWordCountColor()} text-2xl font-semibold transition-colors duration-400`}>
           {stats.wordCount}
         </p>
 
@@ -98,9 +112,18 @@ function StatsDisplay({
       {showReadingTime && (
         <div className="">
           <p className="text-gray-500">Reading Time</p>
-          <p className="text-2xl font-semibold">{formatTime()}</p>
+          <p className={`${getReadingTimeColor()} text-2xl font-semibold`}>
+            {formatTime(stats.readingTime)}
+            </p>
         </div>
       )}
+
+      {targetReadingTime !== undefined && (
+      <p className="text-xs text-purple-500 font-light mt-3">
+        Target: {formatTime(targetReadingTime)}
+      </p>
+    )}
+    
     </div>
   );
 }

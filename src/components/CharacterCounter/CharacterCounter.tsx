@@ -6,7 +6,7 @@ import StatsDisplay from "../StatsDisplay/StatsDisplay";
 //tested numbers between 200 and 260 and
 // 210 seemed safe to use
 const WORDS_PER_MIN = 210;
-function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps) {
+function CharacterCounter({minWords = 25, maxWords = 100, targetReadingTime = 0.25}: CharacterCounterProps) {
     const [userText, setUserText] = useState<string>("");
 
     //takes a plain string, not an event because TextInput uses e.target.value out of the event
@@ -41,7 +41,12 @@ function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps
     return (
         <div className="flex flex-col gap-30 rounded-xl border border-gray-300 shadow-lg p-10">
             <TextInput onTextChange={handleTextChange} maxLength={4000}/>
-            <StatsDisplay stats={stats} minWords={minWords} maxWords={maxWords}/>
+            <StatsDisplay 
+            stats={stats} 
+            minWords={minWords} 
+            maxWords={maxWords}
+            targetReadingTime={targetReadingTime}
+            />
         </div>
     )
 }

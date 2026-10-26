@@ -7,7 +7,7 @@ function TextInput({
   initialValue = "",
   maxLength,
 }: TextInputProps) {
-  //needs a piece of state to  track the length of the text
+  //needs a piece of state to track the length of the text
   const [inputLength, setInputLength] = useState<number>(initialValue.length)
 
   //returns true if the limit is defined and text has reached the limit
@@ -15,7 +15,7 @@ function TextInput({
 
   const colorClasses = limitHit
     ? "shadow-red-500 ring-2 ring-red-500 focus:ring-red-500"
-    : "shadow-purple-500 focus:ring-green-500 focus:ring-2"
+    : "shadow-green-500 focus:ring-green-500 focus:ring-2"
 
 
   //React.ChangeEvent: a change event
