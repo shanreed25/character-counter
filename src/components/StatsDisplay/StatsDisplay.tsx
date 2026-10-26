@@ -112,17 +112,19 @@ function StatsDisplay({
       {showReadingTime && (
         <div className="">
           <p className="text-gray-500">Reading Time</p>
-          <p className={`${getReadingTimeColor()} text-2xl font-semibold`}>
+          <p className={`${getReadingTimeColor()} text-2xl font-semibold transition-colors duration-400`}>
             {formatTime(stats.readingTime)}
+          </p>
+
+          {targetReadingTime !== undefined && (
+            <p className="text-xs text-purple-500 font-light mt-3">
+              Target: {formatTime(targetReadingTime)}
             </p>
+    )}
         </div>
       )}
 
-      {targetReadingTime !== undefined && (
-      <p className="text-xs text-purple-500 font-light mt-3">
-        Target: {formatTime(targetReadingTime)}
-      </p>
-    )}
+
     
     </div>
   );
