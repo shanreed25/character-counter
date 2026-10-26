@@ -27,7 +27,11 @@ function StatsDisplay({stats, showReadingTime = true, minWords, maxWords}: Stats
             <div className="">
                 <p className="text-gray-500">Words</p>
                 <p className={`${getColor()} text-2xl font-semibold`}>{stats.wordCount}</p>
-                <p className="text-xs text-purple-500 font-light mt-3">Min: 25 | Max: 100</p>
+
+                {minWords !== undefined && maxWords !== undefined &&(
+                    <p className="text-xs text-purple-500 font-light mt-3">Min: {minWords} | Max: {maxWords}</p>
+                )
+                }
             </div>
 
             {
