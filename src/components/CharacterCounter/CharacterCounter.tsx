@@ -3,6 +3,9 @@ import { useState, useCallback } from "react";
 import type { CharacterCounterProps, TextStats } from "../../types";
 import StatsDisplay from "../StatsDisplay/StatsDisplay";
 
+//tested numbers between 200 and 260 and
+// 210 seemed safe to use
+const WORDS_PER_MIN = 210;
 function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps) {
     const [userText, setUserText] = useState<string>("");
 
@@ -31,7 +34,7 @@ function CharacterCounter({minWords = 25, maxWords = 100}: CharacterCounterProps
     const stats: TextStats = {
         characterCount,
         wordCount,
-        readingTime: wordCount / 200
+        readingTime: wordCount / WORDS_PER_MIN
     }
 
 
